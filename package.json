@@ -1,0 +1,24 @@
+{
+  "name": "OSBS",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^0.8.0",
+    "bootable": "0.2.x",
+    "bootable-environment": "0.2.x",
+    "connect": "^2.26.3",
+    "connect-powered-by": "0.1.x",
+    "express": "3.x.x",
+    "jade": "^1.7.0",
+    "locomotive": "0.4.x",
+    "locomotive-mongoose": "^0.1.0",
+    "mongoose": "^3.8.16",
+    "mongoose-types": "^1.0.3",
+    "passport": "^0.2.1",
+    "passport-local": "^1.0.0",
+    "session-mongoose": "^0.5.2"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

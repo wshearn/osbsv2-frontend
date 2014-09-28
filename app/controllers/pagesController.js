@@ -6,10 +6,7 @@ var pagesController = new Controller();
 
 pagesController.main = function pages_main() {
   helpers.requireAuth(this.req, this.res);
-
-  this.user = this.req.user;
-  this.title = 'Locomotive';
-  this.render(null, null, null);
+  helpers.genericPageRender(this.req, 'Locomotive', this);
 };
 
 module.exports = pagesController;

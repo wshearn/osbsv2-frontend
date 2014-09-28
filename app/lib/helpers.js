@@ -11,3 +11,11 @@ function requireNoAuth(req, res) {
   }
 }
 exports.requireNoAuth = requireNoAuth;
+
+function genericPageRender(req, title, self) {
+  self.user = req.user;
+  self.title = title;
+
+  self.render(null, null, null);
+}
+exports.genericPageRender = genericPageRender;

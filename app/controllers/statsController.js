@@ -6,10 +6,7 @@ var statsController = new Controller();
 
 statsController.main = function stats_main() {
   helpers.requireAuth(this.req, this.res);
-
-  this.user = this.req.user;
-  this.title = 'Statistics';
-  this.render(null, null, null);
+  helpers.genericPageRender(this.req, 'Statistics', this);
 };
 
 module.exports = statsController;

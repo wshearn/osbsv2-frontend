@@ -5,6 +5,19 @@
 // `function(req, res, next)` is also fully supported.  Consult the Locomotive
 // Guide on [routing](http://locomotivejs.org/guide/routing.html) for additional
 // information.
+
+var crud = [ 'index', 'show', 'edit', 'update' ];
+
+function setupApiV1(parent) {
+  /*
+   * All v1 of the api will be CRUD.
+   * TODO: ALL models must have an api endpoint.
+   */
+  parent.namespace('v1', function(){
+    this.resources('apps', crud);
+  });
+}
+
 module.exports = function routes() {
   this.root('pages#main');
 
@@ -13,6 +26,9 @@ module.exports = function routes() {
   this.match('login', 'users#login', { via: 'post' });
   this.match('logout', 'users#logout');
 
-  //
   this.resource('users');
+
+  this.namespace('api', function() {
+    setupApiV1(this);
+  });
 };

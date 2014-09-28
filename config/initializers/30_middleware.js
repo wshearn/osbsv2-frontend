@@ -1,5 +1,10 @@
 var express = require('express')
-  , poweredBy = require('connect-powered-by');
+  , passport = require('passport')
+  , bodyParser = require('body-parser')
+  , cookieParser = require('cookie-parser')
+  , poweredBy = require('connect-powered-by')
+  , methodOverride = require('method-override')
+  , SessionStore = require('session-mongoose')(express);
 
 module.exports = function() {
   // Use middleware.  Standard [Connect](http://www.senchalabs.org/connect/)
@@ -9,11 +14,24 @@ module.exports = function() {
     this.use(express.logger());
   }
 
-  this.use(poweredBy('Locomotive'));
-  this.use(express.favicon());
+  var store = new SessionStore({
+    url: this.set('db-uri')
+  });
+  this.use(poweredBy('OpenShift'));
   this.use(express.static(__dirname + '/../../public'));
-  this.use(express.bodyParser());
-  this.use(express.methodOverride());
+  this.use(cookieParser());
+  this.use(bodyParser.urlencoded({ extended: true }));
+  this.use(bodyParser.json());
+  this.use(express.session({
+    store:  store,
+    secret: this.set('cookie_secret')
+  }));
+  this.use(methodOverride('X-HTTP-Method'));
+  this.use(methodOverride('X-HTTP-Method-Override'));
+  this.use(methodOverride('X-Method-Override'));
+
+  this.use(passport.initialize());
+  this.use(passport.session());
+
   this.use(this.router);
-  this.use(express.errorHandler());
-}
+};

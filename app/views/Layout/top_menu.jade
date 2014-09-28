@@ -1,3 +1,16 @@
-//
-   Created by whearn on 9/27/14.
-
+ul.nav.navbar-nav.navbar-left
+  li
+    a(href="/") Home
+ul.nav.navbar-nav.navbar-right
+  li.dropdown
+    a.dropdown-toggle(data-toggle="dropdown") #{user.name || user.username}
+      span.caret
+    ul.dropdown-menu
+      li
+        a(href="/user/settings") User Settings
+      if user.groups.indexOf("admin") > -1
+        li
+          a(href="/admin") Admin
+      li.divider
+      li
+        a(href="/logout") Logout

@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    include ../Layout/head
+    link(rel="stylesheet", type="text/css", href="/css/users/signin.css")
+  body
+    div.container
+      form.form-signin(action='/login', method='POST')
+        h2.form-signin-heading Please Sign In
+        input.form-control(type='text', name='username', placeholder="Username", required, autofocus)
+        input.form-control(type='password', name='password', placeholder="Password", required)
+        button.btn.btn-primary.btn-lg.btn-block(type='submit') Login

@@ -9,4 +9,4 @@ module.exports = function() {
   this.set('view options', {
     pretty: true
   });
-}
+};

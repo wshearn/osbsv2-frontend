@@ -1,13 +1,10 @@
 var mongoose = require('mongoose')
   , bcrypt = require('bcrypt');
 
-var Schema = mongoose.Schema;
-
-var UserSchema = new Schema({
+var UserSchema = new mongoose.Schema({
   username: {
     type: String,
-    unique: true,
-    required: true
+    unique: true
   },
 
   salt: {
@@ -18,25 +15,48 @@ var UserSchema = new Schema({
   hash: {
     type: String,
     required: true
+  },
+
+  name: {
+    type: String,
+    default: "John Doe"
+  },
+
+  groups: {
+    type: Array
   }
 });
 
-UserSchema.virtual('password', null).get(function getPassword(){
+UserSchema.virtual('password', null).get(function(){
   return this._password;
-});
-
-UserSchema.virtual('password', null).set(function setPassword(password){
+}).set(function(password){
   this._password = password;
   this.salt = bcrypt.genSaltSync(10);
   this.hash = bcrypt.hashSync(password, this.salt);
 });
 
-UserSchema.method('checkPassword', function checkPassword(password, callback){
+UserSchema.method('checkPassword', function(password, callback){
   bcrypt.compare(password, this.hash, callback);
 });
 
-UserSchema.static('authenticate', function authenticate(username, password, callback){
+UserSchema.static('authenticate', function (username, password, callback) {
+  this.findOne({ username: username }, function(err, user) {
+    if (err)
+      return callback(err);
 
+    if (!user)
+      return callback(null, false);
+
+    user.checkPassword(password, function(err, passwordCorrect) {
+      if (err)
+        return callback(err);
+
+      if (!passwordCorrect)
+        return callback(null, false);
+
+      return callback(null, user);
+    });
+  });
 });
 
 module.exports = mongoose.model('User', UserSchema);

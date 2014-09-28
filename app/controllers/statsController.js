@@ -2,14 +2,14 @@ var locomotive = require('locomotive')
   , helpers = require('../lib/helpers')
   , Controller = locomotive.Controller;
 
-var pagesController = new Controller();
+var statsController = new Controller();
 
-pagesController.main = function pages_main() {
+statsController.main = function stats_main() {
   helpers.requireAuth(this.req, this.res);
 
   this.user = this.req.user;
-  this.title = 'Locomotive';
+  this.title = 'Statistics';
   this.render(null, null, null);
 };
 
-module.exports = pagesController;
+module.exports = statsController;

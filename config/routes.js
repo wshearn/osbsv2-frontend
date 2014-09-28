@@ -7,4 +7,12 @@
 // information.
 module.exports = function routes() {
   this.root('pages#main');
-}
+
+  this.match('register', 'users#register', { via: 'get' });
+  this.match('login', 'users#loginForm', { via: 'get' });
+  this.match('login', 'users#login', { via: 'post' });
+  this.match('logout', 'users#logout');
+
+  //
+  this.resource('users');
+};

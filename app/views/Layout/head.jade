@@ -1,2 +1,6 @@
-title #{title}
-link(rel="stylesheet", type="text/css", href="/stylesheets/screen.css")
+if title
+  title OSBS - #{title}
+else
+  title OSBS
+link(rel="stylesheet", type="text/css", href="/css/bootstrap.css")
+link(rel="stylesheet", type="text/css", href="/css/site.css")

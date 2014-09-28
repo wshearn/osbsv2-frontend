@@ -3,3 +3,4 @@
 node_modules/
 .idea
 config/initializers/99_test.js
+public/third_party

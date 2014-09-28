@@ -1,7 +1,6 @@
 var locomotive = require('locomotive'),
     passport   = require('passport'),
     helpers    = require('../lib/helpers'),
-    lodash     = require('lodash'),
     Controller = locomotive.Controller;
 
 var User  = require('../models/User'),

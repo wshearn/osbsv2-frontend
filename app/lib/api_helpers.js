@@ -1,6 +1,6 @@
 function generic(res, err, data) {
   if (err) {
-    return apiError(res, err);
+    return error(res, err);
   }
 
   if (!data) {

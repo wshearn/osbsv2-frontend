@@ -56,18 +56,15 @@ function user_create() {
   // TODO unique token for registering
   var self = this;
   var token = self.param('token');
-  var groups = ['authenticated'];
 
   Token.findOne({token: token}, function findRegToken(err, token){
     if (err || !token) {
       return self.res.redirect('/register', 401);
     }
 
-    groups = lodash.union(groups, token.groups);
-
     var newUser = {
       name:     self.param('name'),
-      groups:   groups,
+      groups:   token.groups,
       username: self.param('username'),
       password: self.param('password'),
       token:    token.token

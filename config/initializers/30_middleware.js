@@ -14,7 +14,7 @@ function setupParsers(self) {
 
 function setupSession(self) {
   var store = new SessionStore({
-    url: this.set('db-uri')
+    url: self.set('db-uri')
   });
 
   self.use(express.session({

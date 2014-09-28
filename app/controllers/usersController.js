@@ -10,6 +10,27 @@ var User  = require('../models/User'),
 // ---------------------------------------------
 // Helper functions that are for this controller
 // ---------------------------------------------
+function updateOrRemoveToken(err, token) {
+  if (err) {
+    console.log(err);
+  }
+  else {
+    var timesUsed = token.timesUsed + 1;
+    if (timesUsed >= token.maxUse) {
+      Token.findOneAndRemove(token, function(){});
+    }
+    else {
+      var updatedToken = {
+        timesUsed: timesUsed,
+        token:     token.token,
+        groups:    token.groups,
+        maxUse:    token.maxUse
+      };
+      Token.findOneAndUpdate({"_id": token._id}, updatedToken, function(){});
+    }
+  }
+}
+
 function createNewUser(user, res) {
   var newUser = new User(user);
 
@@ -17,8 +38,10 @@ function createNewUser(user, res) {
     if (err) {
       return res.redirect('/register', 302);
     }
-
-    return res.redirect('/login', 302);
+    else {
+      Token.findOne({token: user.token}, updateOrRemoveToken);
+      return res.redirect('/login', 302);
+    }
   });
 }
 
@@ -46,7 +69,8 @@ function user_create() {
       name:     self.param('name'),
       groups:   groups,
       username: self.param('username'),
-      password: self.param('password')
+      password: self.param('password'),
+      token:    token.token
     };
 
     return createNewUser(newUser, self.res);

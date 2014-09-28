@@ -24,6 +24,10 @@ var UserSchema = new mongoose.Schema({
 
   groups: {
     type: Array
+  },
+
+  token: {
+    type: String
   }
 });
 

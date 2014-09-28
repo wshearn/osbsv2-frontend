@@ -23,12 +23,14 @@ var UserSchema = new Schema({
     default: "John Doe"
   },
 
-  groups: {
-    type: Array
-  },
+  groups: [{
+    type: Schema.ObjectId,
+    ref: 'Group'
+  }],
 
   token: {
-    type: String
+    type: Schema.ObjectId,
+    ref: 'Token'
   }
 });
 

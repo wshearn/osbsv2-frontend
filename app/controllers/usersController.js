@@ -66,7 +66,7 @@ function create() {
       groups:   token.groups,
       username: self.param('username'),
       password: self.param('password'),
-      token:    token.token
+      token:    token
     };
 
     return createNewUser(newUser, self.res);

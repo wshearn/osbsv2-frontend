@@ -7,9 +7,10 @@ var TokenSchema = new Schema({
     unique: true
   },
 
-  groups: {
-    type: Array
-  },
+  groups: [{
+    type: Schema.ObjectId,
+    ref: 'Group'
+  }],
 
   timesUsed: {
     type: Number,

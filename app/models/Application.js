@@ -10,9 +10,10 @@ var ApplicationSchema = new Schema({
     type: String
   },
 
-  groups: {
-    type: Array
-  }
+  groups: [{
+    type: Schema.ObjectId,
+    ref: 'Group'
+  }]
 });
 
 module.exports = mongoose.model('Application', ApplicationSchema);

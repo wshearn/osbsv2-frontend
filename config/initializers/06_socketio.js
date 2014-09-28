@@ -1,8 +1,8 @@
-var socketio         = require('socket.io')
-  , express          = require('express')
-  , cookieParser     = require('cookie-parser')
-  , SessionStore     = require('session-mongoose')(express)
-  , passportSocketIo = require('passport.socketio');
+var socketio         = require('socket.io'),
+    express          = require('express'),
+    cookieParser     = require('cookie-parser'),
+    SessionStore     = require('session-mongoose')(express),
+    passportSocketIo = require('passport.socketio');
 
 // ---------------------------------------------
 // Socket IO functions

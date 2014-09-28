@@ -1,6 +1,6 @@
-var locomotive = require('locomotive')
-  , helpers = require('../lib/helpers')
-  , Controller = locomotive.Controller;
+var locomotive = require('locomotive'),
+    helpers    = require('../lib/helpers'),
+    Controller = locomotive.Controller;
 
 var statsController = new Controller();
 

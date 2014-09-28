@@ -1,5 +1,5 @@
-var mongoose = require('mongoose')
-  , bcrypt = require('bcrypt');
+var mongoose = require('mongoose'),
+    bcrypt   = require('bcrypt');
 
 var UserSchema = new mongoose.Schema({
   username: {
@@ -41,20 +41,23 @@ UserSchema.method('checkPassword', function(password, callback){
 
 UserSchema.static('authenticate', function (username, password, callback) {
   this.findOne({ username: username }, function(err, user) {
-    if (err)
+    if (err) {
       return callback(err);
-
-    if (!user)
+    }
+    else if (!user) {
       return callback(null, false);
+    }
 
     user.checkPassword(password, function(err, passwordCorrect) {
-      if (err)
+      if (err) {
         return callback(err);
-
-      if (!passwordCorrect)
+      }
+      else if (!passwordCorrect) {
         return callback(null, false);
-
-      return callback(null, user);
+      }
+      else {
+        return callback(null, user);
+      }
     });
   });
 });

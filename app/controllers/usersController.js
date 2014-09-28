@@ -1,11 +1,11 @@
-var locomotive = require('locomotive')
-  , passport = require('passport')
-  , helpers = require('../lib/helpers')
-  , lodash = require('lodash')
-  , Controller = locomotive.Controller;
+var locomotive = require('locomotive'),
+    passport   = require('passport'),
+    helpers    = require('../lib/helpers'),
+    lodash     = require('lodash'),
+    Controller = locomotive.Controller;
 
-var User = require('../models/User')
-  , Token = require('../models/Token');
+var User  = require('../models/User'),
+    Token = require('../models/Token');
 
 // ---------------------------------------------
 // Helper functions that are for this controller
@@ -14,8 +14,9 @@ function createNewUser(user, res) {
   var newUser = new User(user);
 
   newUser.save(function saveErrorCheck(err){
-    if (err)
+    if (err) {
       return res.redirect('/register', 302);
+    }
 
     return res.redirect('/login', 302);
   });
@@ -35,8 +36,9 @@ function user_create() {
   var groups = ['authenticated'];
 
   Token.findOne({token: token}, function findRegToken(err, token){
-    if (err || !token)
+    if (err || !token) {
       return self.res.redirect('/register', 401);
+    }
 
     groups = lodash.union(groups, token.groups);
 

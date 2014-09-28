@@ -19,8 +19,9 @@ function onAuthorizeSuccess(data, accept){
 }
 
 function onAuthorizeFail(data, message, error, accept){
-  if(error)
+  if(error) {
     accept(new Error(message));
+  }
 }
 
 module.exports = function() {
@@ -40,6 +41,6 @@ module.exports = function() {
   }));
 
   this.io.sockets.on('connection', function(socket){
-    socket.on('hello', function(data){ sio_helloWorld(socket, data) });
+    socket.on('hello', function(data){ sio_helloWorld(socket, data); });
   });
 };

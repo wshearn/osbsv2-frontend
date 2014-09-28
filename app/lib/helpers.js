@@ -1,21 +1,29 @@
-function requireAuth(req, res) {
-  if (!req.isAuthenticated()) {
-    res.redirect(302, '/login');
+function requireAuth(self, cb) {
+  if (!self.req.isAuthenticated()) {
+    return self.res.redirect(302, '/login');
+  }
+
+  if (cb) {
+   return cb(self);
   }
 }
 exports.requireAuth = requireAuth;
 
-function requireNoAuth(req, res) {
-  if (req.isAuthenticated()) {
-    res.redirect(302, '/');
+function genericPageRender(self, title) {
+  if (title) {
+    self.title = title;
   }
-}
-exports.requireNoAuth = requireNoAuth;
 
-function genericPageRender(req, title, self) {
-  self.user = req.user;
-  self.title = title;
+  if (self.req.user) {
+    self.user = self.req.user;
+  }
 
-  self.render(null, null, null);
+  return self.render(null, null, null);
 }
 exports.genericPageRender = genericPageRender;
+
+function genericPageRenderWithAuth(title, self) {
+  self.title = title;
+  return requireAuth(self, genericPageRender);
+}
+exports.genericPageRenderWithAuth = genericPageRenderWithAuth;

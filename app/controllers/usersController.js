@@ -92,9 +92,11 @@ function register() {
 }
 
 function loginForm() {
-  helpers.requireNoAuth(this.req, this.res);
+  if (this.req.isAuthenticated()) {
+    return this.res.redirect(302, '/');
+  }
 
-  this.render(null, null, null);
+  return helpers.genericPageRender(this, 'Login');
 }
 
 function logout() {

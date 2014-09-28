@@ -5,8 +5,7 @@ var locomotive = require('locomotive'),
 var statsController = new Controller();
 
 statsController.main = function stats_main() {
-  helpers.requireAuth(this.req, this.res);
-  helpers.genericPageRender(this.req, 'Statistics', this);
+  return helpers.genericPageRenderWithAuth('Statistics', this);
 };
 
 module.exports = statsController;

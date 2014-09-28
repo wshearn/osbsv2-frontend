@@ -5,8 +5,7 @@ var locomotive = require('locomotive'),
 var pagesController = new Controller();
 
 pagesController.main = function pages_main() {
-  helpers.requireAuth(this.req, this.res);
-  helpers.genericPageRender(this.req, 'Locomotive', this);
+  return helpers.genericPageRenderWithAuth('Locomotive', this);
 };
 
 module.exports = pagesController;

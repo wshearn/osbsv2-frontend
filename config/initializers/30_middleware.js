@@ -1,10 +1,10 @@
-var express = require('express'),
-    passport = require('passport'),
-    bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'),
-    poweredBy = require('connect-powered-by'),
+var express        = require('express'),
+    passport       = require('passport'),
+    bodyParser     = require('body-parser'),
+    cookieParser   = require('cookie-parser'),
+    poweredBy      = require('connect-powered-by'),
     methodOverride = require('method-override'),
-    SessionStore = require('session-mongoose')(express);
+    SessionStore   = require('session-mongoose')(express);
 
 function setupParsers(self) {
   self.use(cookieParser());

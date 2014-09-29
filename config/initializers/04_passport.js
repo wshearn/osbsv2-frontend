@@ -1,17 +1,17 @@
 var passport      = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
+    BasicStrategy = require('passport-http').BasicStrategy,
     User          = require('../../app/models/User');
 
-passport.use(new LocalStrategy(
-  {
-    usernameField: 'username'
-  },
-  function auth(username, password, done) {
-    User.authenticate(username, password, function findUser(err, user){
-      return done(err, user);
-    });
-  }
-));
+function auth(username, password, done) {
+  User.authenticate(username, password, function findUser(err, user){
+    return done(err, user);
+  });
+}
+
+passport.use(new LocalStrategy({ usernameField: 'username' }, auth));
+
+passport.use(new BasicStrategy(auth));
 
 passport.serializeUser(function(user, done) {
   done(null, user._id);

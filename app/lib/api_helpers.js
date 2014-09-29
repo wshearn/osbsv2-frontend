@@ -1,3 +1,5 @@
+var passport = require('passport');
+
 function generic(res, err, data) {
   if (err) {
     return res.json(err);
@@ -40,3 +42,5 @@ function findAndDestroy(res, Schema, id) {
   });
 }
 exports.findAndDestroy = findAndDestroy;
+
+exports.isAuthenticated = passport.authenticate('basic', { session: false });

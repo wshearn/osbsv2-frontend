@@ -34,6 +34,7 @@ function destroy() {
 }
 
 var servicesController = new Controller();
+servicesController.before('*', helper.isAuthenticated);
 servicesController.index   = index;
 servicesController.show    = show;
 servicesController.update  = update;

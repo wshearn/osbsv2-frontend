@@ -34,6 +34,7 @@ function destroy() {
 }
 
 var appsController = new Controller();
+appsController.before('*', helper.isAuthenticated);
 appsController.index   = index;
 appsController.show    = show;
 appsController.update  = update;

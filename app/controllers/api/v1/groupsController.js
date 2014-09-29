@@ -31,6 +31,7 @@ function destroy() {
 }
 
 var groupsController = new Controller();
+groupsController.before('*', helper.isAuthenticated);
 groupsController.index   = index;
 groupsController.show    = show;
 groupsController.update  = update;

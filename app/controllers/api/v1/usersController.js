@@ -35,6 +35,7 @@ function destroy() {
 }
 
 var usersController = new Controller();
+usersController.before('*', helper.isAuthenticated);
 usersController.index   = index;
 usersController.show    = show;
 usersController.update  = update;

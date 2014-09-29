@@ -33,6 +33,7 @@ function destroy() {
 }
 
 var tokensController = new Controller();
+tokensController.before('*', helper.isAuthenticated);
 tokensController.index   = index;
 tokensController.show    = show;
 tokensController.update  = update;

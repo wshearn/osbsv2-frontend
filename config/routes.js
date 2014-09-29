@@ -14,7 +14,11 @@ function setupApiV1(parent) {
    * TODO: ALL models must have an api endpoint.
    */
   parent.namespace('v1', function(){
-    this.resources('apps', crud);
+    this.resources('applications', crud);
+    this.resources('groups', crud);
+    this.resources('services', crud);
+    this.resources('tokens', crud);
+    this.resources('users', crud);
   });
 }
 

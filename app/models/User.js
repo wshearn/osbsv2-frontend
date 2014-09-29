@@ -28,10 +28,10 @@ var UserSchema = new Schema({
     ref: 'Group'
   }],
 
-  token: {
+  token: [{
     type: Schema.ObjectId,
     ref: 'Token'
-  }
+  }]
 });
 
 UserSchema.virtual('password', null).get(function(){

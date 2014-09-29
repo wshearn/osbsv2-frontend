@@ -52,7 +52,6 @@ function createNewUser(user, res) {
 // REST Routes
 // -----------
 function create() {
-  // TODO unique token for registering
   var self = this;
   var token = self.param('token');
 

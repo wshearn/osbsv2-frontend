@@ -19,9 +19,8 @@ function update() {
       return helper.error(self.res, err);
     }
 
-    token.name    = self.req.param('token') || token.token;
-    token.groups  = self.req.param('groups') || token.groups;
-    token.service = token.timesUsed;
+    token.name   = self.req.param('token') || token.token;
+    token.groups = self.req.param('groups') || token.groups;
     token.maxUse = self.req.param('maxUse') || token.maxUse;
     token.save(function (err){
       return helper.generic(self.res, err, token);

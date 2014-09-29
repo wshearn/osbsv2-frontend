@@ -1,6 +1,6 @@
 var locomotive = require('locomotive'),
-  helper     = require('../../../lib/api_helpers'),
-  Controller = locomotive.Controller;
+    helper     = require('../../../lib/api_helpers'),
+    Controller = locomotive.Controller;
 
 var Application = require('../../../models/Application');
 

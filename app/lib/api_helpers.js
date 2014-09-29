@@ -51,7 +51,7 @@ function findAndUpdateObject(res, Schema, param) {
 }
 exports.findAndUpdateObject = findAndUpdateObject;
 
-function findAndDestroy(Schema, id) {
+function findAndDestroy(res, Schema, id) {
   Schema.findOne({"_id": id}, function(err, object){
     if (err) {
       return error(res, err);

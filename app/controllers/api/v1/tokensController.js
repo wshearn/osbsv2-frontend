@@ -4,15 +4,18 @@ var locomotive = require('locomotive'),
 
 var Token = require('../../../models/Token');
 
-function index() {
+var tokensController = new Controller();
+tokensController.before('*', helper.isAuthenticated);
+
+tokensController.index = function index() {
   return helper.findAndReturnObject(this.res, Token, null);
-}
+};
 
-function show() {
+tokensController.show = function show() {
   return helper.findAndReturnObject(this.res, Token, this.req.param('id'));
-}
+};
 
-function update() {
+tokensController.update = function update() {
   var self = this;
   Token.findOne({"_id": self.req.param('id')}, function (err, token){
     if (err) {
@@ -26,16 +29,10 @@ function update() {
       return helper.generic(self.res, err, token);
     });
   });
-}
+};
 
-function destroy() {
+tokensController.destroy = function destroy() {
   return helper.findAndDestroy(this.res, Token, this.req.param('id'));
-}
+};
 
-var tokensController = new Controller();
-tokensController.before('*', helper.isAuthenticated);
-tokensController.index   = index;
-tokensController.show    = show;
-tokensController.update  = update;
-tokensController.destroy = destroy;
 module.exports = tokensController;

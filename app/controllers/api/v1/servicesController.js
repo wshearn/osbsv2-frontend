@@ -4,15 +4,18 @@ var locomotive = require('locomotive'),
 
 var Service = require('../../../models/Service');
 
-function index() {
+var servicesController = new Controller();
+servicesController.before('*', helper.isAuthenticated);
+
+servicesController.index = function index() {
   return helper.findAndReturnObject(this.res, Service, null);
-}
+};
 
-function show() {
+servicesController.show = function show() {
   return helper.findAndReturnObject(this.res, Service, this.req.param('id'));
-}
+};
 
-function update() {
+servicesController.update = function update() {
   var self = this;
   Service.findOne({"_id": self.req.param('id')}, function (err, service){
     if (err) {
@@ -27,16 +30,10 @@ function update() {
       return helper.generic(self.res, err, service);
     });
   });
-}
+};
 
-function destroy() {
+servicesController.destroy = function destroy() {
   return helper.findAndDestroy(this.res, Service, this.req.param('id'));
-}
+};
 
-var servicesController = new Controller();
-servicesController.before('*', helper.isAuthenticated);
-servicesController.index   = index;
-servicesController.show    = show;
-servicesController.update  = update;
-servicesController.destroy = destroy;
 module.exports = servicesController;

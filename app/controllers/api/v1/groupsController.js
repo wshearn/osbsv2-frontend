@@ -4,15 +4,18 @@ var locomotive = require('locomotive'),
 
 var Group = require('../../../models/Group');
 
-function index() {
+var groupsController = new Controller();
+groupsController.before('*', helper.isAuthenticated);
+
+groupsController.index = function index() {
   return helper.findAndReturnObject(this.res, Group, null);
-}
+};
 
-function show() {
+groupsController.show = function show() {
   return helper.findAndReturnObject(this.res, Group, this.req.param('id'));
-}
+};
 
-function update() {
+groupsController.update = function update() {
   var self = this;
   Group.findOne({"_id": self.req.param('id')}, function (err, group){
     if (err) {
@@ -24,16 +27,10 @@ function update() {
       return helper.generic(self.res, err, group);
     });
   });
-}
+};
 
-function destroy() {
+groupsController.destroy = function destroy() {
   return helper.findAndDestroy(this.res, Group, this.req.param('id'));
-}
+};
 
-var groupsController = new Controller();
-groupsController.before('*', helper.isAuthenticated);
-groupsController.index   = index;
-groupsController.show    = show;
-groupsController.update  = update;
-groupsController.destroy = destroy;
 module.exports = groupsController;

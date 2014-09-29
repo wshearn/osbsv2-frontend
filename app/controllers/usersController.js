@@ -6,13 +6,12 @@ var locomotive = require('locomotive'),
 var User  = require('../models/User'),
     Token = require('../models/Token');
 
-// ---------------------------------------------
-// Helper functions that are for this controller
-// ---------------------------------------------
-// TODO: Don't remove token but lock it instead
+var userController = new Controller();
+
 function errHelper(err) {
   console.log(err);
 }
+// TODO: Don't remove token but lock it instead
 function updateOrRemoveToken(err, token) {
   if (err) {
     console.log(err);
@@ -45,14 +44,7 @@ function createNewUser(user, res) {
   });
 }
 
-// ---------------------------------------------
-// Controller functions
-// ---------------------------------------------
-
-// -----------
-// REST Routes
-// -----------
-function create() {
+userController.create = function create() {
   var self = this;
   var token = self.param('token');
 
@@ -71,46 +63,30 @@ function create() {
 
     return createNewUser(newUser, self.res);
   });
-}
+};
 
-// -----------
-// Post Routes
-// -----------
-function login() {
+userController.login = function login() {
   passport.authenticate('local', {
       successRedirect: '/',
       failureRedirect: this.urlFor({ action: 'login' }) }
   )(this.__req, this.__res, this.__next);
-}
+};
 
-
-// -----------
-// Get Routes
-// -----------
-function register() {
+userController.register = function register() {
   this.render(null, null, null);
-}
+};
 
-function loginForm() {
+userController.loginForm = function loginForm() {
   if (this.req.isAuthenticated()) {
     return this.res.redirect(302, '/');
   }
 
   return helpers.genericPageRender(this, 'Login');
-}
+};
 
-function logout() {
+userController.logout = function logout() {
   this.req.logout();
   this.redirect('/', 302);
-}
+};
 
-// ---------------------------------------------
-// Controller exports
-// ---------------------------------------------
-var userController = new Controller();
-userController.login     = login;
-userController.logout    = logout;
-userController.create    = create;
-userController.register  = register;
-userController.loginForm = loginForm;
 module.exports = userController;

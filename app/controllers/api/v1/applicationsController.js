@@ -4,16 +4,18 @@ var locomotive = require('locomotive'),
 
 var Application = require('../../../models/Application');
 
-function index() {
+var appsController = new Controller();
+appsController.before('*', helper.isAuthenticated);
+
+appsController.index = function index() {
   return helper.findAndReturnObject(this.res, Application, null);
-}
+};
 
-function show() {
+appsController.show = function show() {
   return helper.findAndReturnObject(this.res, Application, this.req.param('id'));
-}
+};
 
-
-function update() {
+appsController.update = function update() {
   var self = this;
   Application.findOne({"_id": self.req.param('id')}, function (err, app){
     if (err) {
@@ -27,16 +29,10 @@ function update() {
       return helper.generic(self.res, err, app);
     });
   });
-}
+};
 
-function destroy() {
+appsController.destroy = function destroy() {
   return helper.findAndDestroy(this.res, Application, this.req.param('id'));
-}
+};
 
-var appsController = new Controller();
-appsController.before('*', helper.isAuthenticated);
-appsController.index   = index;
-appsController.show    = show;
-appsController.update  = update;
-appsController.destroy = destroy;
 module.exports = appsController;

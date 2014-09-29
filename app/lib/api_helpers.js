@@ -30,7 +30,14 @@ function findAndReturnObject(res, Schema, id) {
 }
 exports.findAndReturnObject = findAndReturnObject;
 
-function findAndDestroy(res, Schema, id) {
+function findObject(Schema, id, callback) {
+  Schema.findOne({"_id": id}, function (err, object){
+    return callback(err, object);
+  });
+}
+exports.findObject = findObject;
+
+function findAndDestroy(Schema, id) {
   Schema.findOne({"_id": id}, function(err, object){
     if (err) {
       return error(res, err);

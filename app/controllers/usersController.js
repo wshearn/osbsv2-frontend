@@ -10,6 +10,9 @@ var User  = require('../models/User'),
 // Helper functions that are for this controller
 // ---------------------------------------------
 // TODO: Don't remove token but lock it instead
+function errHelper(err) {
+  console.log(err);
+}
 function updateOrRemoveToken(err, token) {
   if (err) {
     console.log(err);
@@ -17,10 +20,10 @@ function updateOrRemoveToken(err, token) {
   else {
     token.timesUsed = token.timesUsed + 1;
     if (token.timesUsed >= token.maxUse) {
-      token.remove(function(err){});
+      token.remove(errHelper);
     }
     else {
-      token.save(function(err){});
+      token.save(errHelper);
     }
   }
 }
@@ -30,7 +33,6 @@ function createNewUser(user, res) {
 
   newUser.save(function saveErrorCheck(err){
     if (err) {
-      console.log(err);
       return res.redirect('/register', 302);
     }
     else {

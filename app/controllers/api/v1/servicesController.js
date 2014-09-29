@@ -5,17 +5,11 @@ var locomotive = require('locomotive'),
 var Service = require('../../../models/Service');
 
 function index() {
-  var self = this;
-  Service.find(function (err, services){
-    return helper.generic(self.res, err, services);
-  });
+  return helper.findAndReturnObject(this.res, Service, null);
 }
 
 function show() {
-  var self = this;
-  Service.findOne({"_id": self.req.param('id')}, function (err, service){
-    return helper.generic(self.res, err, service);
-  });
+  return helper.findAndReturnObject(this.res, Service, this.req.param('id'));
 }
 
 function update() {
@@ -36,16 +30,7 @@ function update() {
 }
 
 function destroy() {
-  var self = this;
-  Service.findOne({"_id": self.req.param('id')}, function (err, service){
-    if (err) {
-      return helper.error(self.res, err);
-    }
-
-    service.remove(function (err){
-      helper.generic(self.res, err, {});
-    });
-  });
+  return helper.findAndDestroy(this.res, Service, this.req.param('id'));
 }
 
 var servicesController = new Controller();

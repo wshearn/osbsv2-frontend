@@ -1,4 +1,4 @@
-exports.requireAuth = function requireAuth(self, cb) {
+function requireAuth(self, cb) {
   if (!self.req.isAuthenticated()) {
     return self.res.redirect(302, '/login');
   }
@@ -6,9 +6,10 @@ exports.requireAuth = function requireAuth(self, cb) {
   if (cb) {
    return cb(self);
   }
-};
+}
+exports.requireAuth = requireAuth;
 
-exports.genericPageRender = function genericPageRender(self, title) {
+function genericPageRender(self, title) {
   if (title) {
     self.title = title;
   }
@@ -18,9 +19,11 @@ exports.genericPageRender = function genericPageRender(self, title) {
   }
 
   return self.render(null, null, null);
-};
+}
+exports.genericPageRender = genericPageRender;
 
-exports.genericPageRenderWithAuth = function genericPageRenderWithAuth(title, self) {
+function genericPageRenderWithAuth(title, self) {
   self.title = title;
   return requireAuth(self, genericPageRender);
-};
+}
+exports.genericPageRenderWithAuth = genericPageRenderWithAuth;

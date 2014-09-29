@@ -16,7 +16,7 @@ appsController.show = function show() {
 };
 
 appsController.update = function update() {
-  return helper.findAndUpdateObject(this.res, Application, this.req.param);
+  return helper.findAndUpdateObject(this.res, Application, this.req.param('id'), this.req.body);
 };
 
 appsController.destroy = function destroy() {

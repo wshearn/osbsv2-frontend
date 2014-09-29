@@ -16,7 +16,7 @@ groupsController.show = function show() {
 };
 
 groupsController.update = function update() {
-  return helper.findAndUpdateObject(this.res, Group, this.req.param);
+  return helper.findAndUpdateObject(this.res, Group, this.req.param('id'), this.req.body);
 };
 
 groupsController.destroy = function destroy() {

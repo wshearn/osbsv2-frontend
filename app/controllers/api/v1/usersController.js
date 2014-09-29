@@ -16,7 +16,7 @@ usersController.show = function show() {
 };
 
 usersController.update = function update() {
-  return helper.findAndUpdateObject(this.res, User, this.req.param);
+  return helper.findAndUpdateObject(this.res, User, this.req.param('id'), this.req.body);
 };
 
 usersController.destroy = function destroy() {

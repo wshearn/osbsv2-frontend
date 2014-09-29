@@ -16,7 +16,7 @@ servicesController.show = function show() {
 };
 
 servicesController.update = function update() {
-  return helper.findAndUpdateObject(this.res, Service, this.req.param);
+  return helper.findAndUpdateObject(this.res, Service, this.req.param('id'), this.req.body);
 };
 
 servicesController.destroy = function destroy() {

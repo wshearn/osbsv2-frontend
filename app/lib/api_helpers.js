@@ -35,7 +35,8 @@ exports.findAndUpdateObject = function findAndUpdateObject(res, Schema, param) {
 
     for (var item in object) {
       if (object.hasOwnProperty(item) && param.hasOwnProperty(item)) {
-        if (object[item] !== param[item]) {
+        if (object[item] !== param[item] &&
+          typeof(object[item]) === typeof(param[item])) {
           object[item] = param[item];
         }
       }

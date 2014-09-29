@@ -1,22 +1,20 @@
 var passport = require('passport');
 
-function generic(res, err, data) {
+exports.generic = function generic(res, err, data) {
   if (err) {
     return res.json(err);
   }
 
   return res.json(data);
-}
-exports.generic = generic;
+};
 
-function error(res, err) {
+exports.error = function error(res, err) {
   return res.json({
     error: err
   });
-}
-exports.error = error;
+};
 
-function findAndReturnObject(res, Schema, id) {
+exports.findAndReturnObject = function findAndReturnObject(res, Schema, id) {
   if (id === null) {
     Schema.find(function(err, objects){
       return generic(res, err, objects);
@@ -27,10 +25,9 @@ function findAndReturnObject(res, Schema, id) {
       return generic(res, err, object);
     });
   }
-}
-exports.findAndReturnObject = findAndReturnObject;
+};
 
-function findAndUpdateObject(res, Schema, param) {
+exports.findAndUpdateObject = function findAndUpdateObject(res, Schema, param) {
   Schema.findOne({"_id": param('id')}, function (err, object){
     if (err) {
       return error(res, err);
@@ -48,10 +45,9 @@ function findAndUpdateObject(res, Schema, param) {
       return generic(res, err, object);
     });
   });
-}
-exports.findAndUpdateObject = findAndUpdateObject;
+};
 
-function findAndDestroy(res, Schema, id) {
+exports.findAndDestroy = function findAndDestroy(res, Schema, id) {
   Schema.findOne({"_id": id}, function(err, object){
     if (err) {
       return error(res, err);
@@ -61,7 +57,6 @@ function findAndDestroy(res, Schema, id) {
       return generic(res, err, {});
     });
   });
-}
-exports.findAndDestroy = findAndDestroy;
+};
 
 exports.isAuthenticated = passport.authenticate('basic', { session: false });

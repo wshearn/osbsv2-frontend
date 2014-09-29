@@ -9,23 +9,18 @@ var User  = require('../models/User'),
 // ---------------------------------------------
 // Helper functions that are for this controller
 // ---------------------------------------------
+// TODO: Don't remove token but lock it instead
 function updateOrRemoveToken(err, token) {
   if (err) {
     console.log(err);
   }
   else {
-    var timesUsed = token.timesUsed + 1;
-    if (timesUsed >= token.maxUse) {
-      Token.findOneAndRemove(token, function(){});
+    token.timesUsed = token.timesUsed + 1;
+    if (token.timesUsed >= token.maxUse) {
+      token.remove(function(err){});
     }
     else {
-      var updatedToken = {
-        timesUsed: timesUsed,
-        token:     token.token,
-        groups:    token.groups,
-        maxUse:    token.maxUse
-      };
-      Token.findOneAndUpdate({"_id": token._id}, updatedToken, function(){});
+      token.save(function(err){});
     }
   }
 }
@@ -35,11 +30,15 @@ function createNewUser(user, res) {
 
   newUser.save(function saveErrorCheck(err){
     if (err) {
+      console.log(err);
       return res.redirect('/register', 302);
     }
     else {
-      Token.findOne({token: user.token}, updateOrRemoveToken);
-      return res.redirect('/login', 302);
+      Token.findOne({"_id": user.token}, function (err, token){
+        updateOrRemoveToken(err, token);
+
+        return res.redirect('/login', 302);
+      });
     }
   });
 }
@@ -65,7 +64,7 @@ function create() {
       groups:   token.groups,
       username: self.param('username'),
       password: self.param('password'),
-      token:    token
+      token:    token.id
     };
 
     return createNewUser(newUser, self.res);

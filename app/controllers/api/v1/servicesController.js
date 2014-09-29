@@ -16,20 +16,7 @@ servicesController.show = function show() {
 };
 
 servicesController.update = function update() {
-  var self = this;
-  Service.findOne({"_id": self.req.param('id')}, function (err, service){
-    if (err) {
-      return helper.error(self.res, err);
-    }
-
-    service.name        = self.req.param('name') || service.name;
-    service.username    = self.req.param('username') || service.username;
-    service.domainName  = self.req.param('domainName') || service.domainName;
-    service.apiEndpoint = self.req.param('apiEndpoint') || service.apiEndpoint;
-    service.save(function (err){
-      return helper.generic(self.res, err, service);
-    });
-  });
+  return helper.findAndUpdateObject(this.res, Service, this.req.param);
 };
 
 servicesController.destroy = function destroy() {

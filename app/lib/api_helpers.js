@@ -30,12 +30,26 @@ function findAndReturnObject(res, Schema, id) {
 }
 exports.findAndReturnObject = findAndReturnObject;
 
-function findObject(Schema, id, callback) {
-  Schema.findOne({"_id": id}, function (err, object){
-    return callback(err, object);
+function findAndUpdateObject(res, Schema, param) {
+  Schema.findOne({"_id": param('id')}, function (err, object){
+    if (err) {
+      return error(res, err);
+    }
+
+    for (var item in object) {
+      if (object.hasOwnProperty(item) && param.hasOwnProperty(item)) {
+        if (object[item] !== param[item]) {
+          object[item] = param[item];
+        }
+      }
+    }
+
+    object.save(function (err) {
+      return generic(res, err, object);
+    });
   });
 }
-exports.findObject = findObject;
+exports.findAndUpdateObject = findAndUpdateObject;
 
 function findAndDestroy(Schema, id) {
   Schema.findOne({"_id": id}, function(err, object){

@@ -16,19 +16,7 @@ appsController.show = function show() {
 };
 
 appsController.update = function update() {
-  var self = this;
-  Application.findOne({"_id": self.req.param('id')}, function (err, app){
-    if (err) {
-      return helper.error(self.res, err);
-    }
-
-    app.name    = self.req.param('name') || app.name;
-    app.groups  = self.req.param('groups') || app.groups;
-    app.service = self.req.param('service') || app.service;
-    app.save(function (err){
-      return helper.generic(self.res, err, app);
-    });
-  });
+  return helper.findAndUpdateObject(this.res, Application, this.req.param);
 };
 
 appsController.destroy = function destroy() {

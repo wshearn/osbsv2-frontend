@@ -16,17 +16,7 @@ groupsController.show = function show() {
 };
 
 groupsController.update = function update() {
-  var self = this;
-  Group.findOne({"_id": self.req.param('id')}, function (err, group){
-    if (err) {
-      return helper.error(self.res, err);
-    }
-
-    group.name = self.req.param('name') || group.name;
-    group.save(function (err){
-      return helper.generic(self.res, err, group);
-    });
-  });
+  return helper.findAndUpdateObject(this.res, Group, this.req.param);
 };
 
 groupsController.destroy = function destroy() {

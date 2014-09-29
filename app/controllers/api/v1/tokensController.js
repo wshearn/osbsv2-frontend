@@ -16,19 +16,7 @@ tokensController.show = function show() {
 };
 
 tokensController.update = function update() {
-  var self = this;
-  Token.findOne({"_id": self.req.param('id')}, function (err, token){
-    if (err) {
-      return helper.error(self.res, err);
-    }
-
-    token.name   = self.req.param('token') || token.token;
-    token.groups = self.req.param('groups') || token.groups;
-    token.maxUse = self.req.param('maxUse') || token.maxUse;
-    token.save(function (err){
-      return helper.generic(self.res, err, token);
-    });
-  });
+  return helper.findAndUpdateObject(this.res, Token, this.req.param);
 };
 
 tokensController.destroy = function destroy() {

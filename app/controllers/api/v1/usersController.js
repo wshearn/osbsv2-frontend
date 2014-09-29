@@ -16,21 +16,7 @@ usersController.show = function show() {
 };
 
 usersController.update = function update() {
-  var self = this;
-  User.findOne({"_id": self.req.param('id')}, function (err, user){
-    if (err) {
-      return helper.error(self.res, err);
-    }
-
-    user.username = self.req.param('username') || user.username;
-    user.name     = self.req.param('name') || user.name;
-    user.groups   = self.req.param('groups') || user.groups;
-    user.token    = self.req.param('token') || user.token;
-    user.password = self.req.param('password') || user.password;
-    user.save(function (err){
-      return helper.generic(self.res, err, user);
-    });
-  });
+  return helper.findAndUpdateObject(this.res, User, this.req.param);
 };
 
 usersController.destroy = function destroy() {

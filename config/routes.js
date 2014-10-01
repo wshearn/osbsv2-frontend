@@ -11,7 +11,6 @@ var crud = [ 'index', 'show', 'edit', 'update' ];
 function setupApiV1(parent) {
   /*
    * All v1 of the api will be CRUD.
-   * TODO: ALL models must have an api endpoint.
    */
   parent.namespace('v1', function(){
     this.resources('applications', crud);

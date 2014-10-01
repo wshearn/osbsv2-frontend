@@ -65,4 +65,4 @@ function findAndDestroy(res, Schema, id) {
 }
 exports.findAndDestroy = findAndDestroy;
 
-exports.isAuthenticated = passport.authenticate('basic', { session: false });
+exports.isAuthenticated = passport.authenticate(['requireuser', 'basic']);

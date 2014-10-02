@@ -18,7 +18,7 @@ var UserSchema = new Schema({
     required: true
   },
 
-  name: {
+  fullname: {
     type: String,
     default: "John Doe"
   },

@@ -2,12 +2,13 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var ApplicationSchema = new Schema({
-  name: {
+  application: {
     type: String
   },
 
   service: {
-    type: String
+    type: Schema.ObjectId,
+    ref: 'Service'
   },
 
   groups: [{

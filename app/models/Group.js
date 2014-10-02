@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var GroupSchema = new Schema({
-  name: {
+  group: {
     type: String,
     unique: true
   }

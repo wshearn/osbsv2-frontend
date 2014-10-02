@@ -65,4 +65,14 @@ function findAndDestroy(res, Schema, id) {
 }
 exports.findAndDestroy = findAndDestroy;
 
+function createObject(res, Schema, item) {
+  var object = new Schema(item);
+
+  object.save(function(err){
+    return generic(res, err, object);
+  });
+
+}
+exports.createObject = createObject;
+
 exports.isAuthenticated = passport.authenticate(['requireuser', 'basic']);

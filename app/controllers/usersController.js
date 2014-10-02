@@ -54,7 +54,7 @@ userController.create = function create() {
     }
 
     var newUser = {
-      name:     self.param('name'),
+      fullname: self.param('fullname'),
       groups:   token.groups,
       username: self.param('username'),
       password: self.param('password'),

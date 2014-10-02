@@ -24,7 +24,7 @@
     "passport": "^0.2.1",
     "passport-http": "^0.2.2",
     "passport-local": "^1.0.0",
-    "passport-requireuser": "^1.0.1",
+    "passport-requireuser": "^1.0.2",
     "passport.socketio": "^3.3.0",
     "session-mongoose": "^0.5.2",
     "socket.io": "^1.1.0"

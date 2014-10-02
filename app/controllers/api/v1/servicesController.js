@@ -19,6 +19,10 @@ servicesController.update = function update() {
   return helper.findAndUpdateObject(this.res, Service, this.req.param('id'), this.req.body);
 };
 
+servicesController.create = function create() {
+  return helper.createObject(this.res, Service, this.req.body);
+};
+
 servicesController.destroy = function destroy() {
   return helper.findAndDestroy(this.res, Service, this.req.param('id'));
 };

@@ -5,7 +5,7 @@ var locomotive = require('locomotive'),
 var User = require('../../../models/User');
 
 var usersController = new Controller();
-usersController.before('*', helper.isAuthenticated);
+usersController.before(['*'], helper.isAuthenticated);
 
 usersController.index = function index() {
   return helper.findAndReturnObject(this.res, User, null);
@@ -17,6 +17,10 @@ usersController.show = function show() {
 
 usersController.update = function update() {
   return helper.findAndUpdateObject(this.res, User, this.req.param('id'), this.req.body);
+};
+
+usersController.create = function create() {
+  return helper.createObject(this.res, User, this.req.body);
 };
 
 usersController.destroy = function destroy() {

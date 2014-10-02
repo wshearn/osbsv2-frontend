@@ -19,6 +19,10 @@ appsController.update = function update() {
   return helper.findAndUpdateObject(this.res, Application, this.req.param('id'), this.req.body);
 };
 
+appsController.create = function create() {
+  return helper.createObject(this.res, Application, this.req.body);
+};
+
 appsController.destroy = function destroy() {
   return helper.findAndDestroy(this.res, Application, this.req.param('id'));
 };

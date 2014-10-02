@@ -19,6 +19,10 @@ tokensController.update = function update() {
   return helper.findAndUpdateObject(this.res, Token, this.req.param('id'), this.req.body);
 };
 
+tokensController.create = function create() {
+  return helper.createObject(this.res, Token, this.req.body);
+};
+
 tokensController.destroy = function destroy() {
   return helper.findAndDestroy(this.res, Token, this.req.param('id'));
 };

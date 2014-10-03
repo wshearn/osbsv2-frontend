@@ -4,29 +4,56 @@ var passport = require('passport');
 
 function generic(res, err, data) {
   if (err) {
-    return res.json(err);
+    error(res, err);
   }
 
-  return res.json(data);
+  return res.status(200).json(data);
 }
 exports.generic = generic;
 
 function error(res, err) {
-  return res.json({
-    error: err
-  });
+  return res.status(500).json(err);
 }
 exports.error = error;
 
-function findAndReturnObject(res, Schema, id) {
+function filterMongoose(object, filter) {
+  if (!filter) {
+    return object;
+  }
+
+  var filterOut = [];
+  if (typeof(filter.length) === "undefined") {
+    filterOut.push(filter);
+  } else {
+    filterOut = filter;
+  }
+
+  if (object !== null) {
+    for (var currFilter = filterOut.length - 1; currFilter >= 0; --currFilter) {
+      if (object._doc.hasOwnProperty(filterOut[currFilter])) {
+        object[filterOut[currFilter]] = [];
+      }
+    }
+  }
+
+  return object;
+}
+
+function findAndReturnObject(res, Schema, id, filter) {
+
   if (id === null) {
     Schema.find(function(err, objects){
-      return generic(res, err, objects);
+      var returnObj = [];
+      objects.forEach(function(obj){
+        returnObj.push(filterMongoose(obj, filter));
+      });
+      return generic(res, err, returnObj);
     });
   }
   else {
     Schema.findOne({"_id": id}, function(err, object){
-      return generic(res, err, object);
+      var retObject = filterMongoose(object, filter);
+      return generic(res, err, retObject);
     });
   }
 }

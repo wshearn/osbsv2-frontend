@@ -1,10 +1,11 @@
 "use strict";
 
 var locomotive = require('locomotive'),
+    mongoose   = require('mongoose'),
     helper     = require('../../../lib/api_helpers'),
     Controller = locomotive.Controller;
 
-var Group = require('../../../models/Group');
+var Group = mongoose.model('Group');
 
 var groupsController = new Controller();
 groupsController.before('*', helper.isAuthenticated);

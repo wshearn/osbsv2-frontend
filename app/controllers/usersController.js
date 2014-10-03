@@ -2,11 +2,12 @@
 
 var locomotive = require('locomotive'),
     passport   = require('passport'),
+    mongoose   = require('mongoose'),
     helpers    = require('../lib/helpers'),
     Controller = locomotive.Controller;
 
-var User  = require('../models/User'),
-    Token = require('../models/Token');
+var User  = mongoose.model('User'),
+    Token = mongoose.model('Token');
 
 var userController = new Controller();
 

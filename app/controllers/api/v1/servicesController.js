@@ -1,10 +1,11 @@
 "use strict";
 
 var locomotive = require('locomotive'),
+    mongoose   = require('mongoose'),
     helper     = require('../../../lib/api_helpers'),
     Controller = locomotive.Controller;
 
-var Service = require('../../../models/Service');
+var Service = mongoose.model('Service');
 
 var servicesController = new Controller();
 servicesController.before('*', helper.isAuthenticated);

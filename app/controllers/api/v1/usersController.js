@@ -1,12 +1,13 @@
 "use strict";
 
 var locomotive = require('locomotive'),
+    mongoose   = require('mongoose'),
     helper     = require('../../../lib/api_helpers'),
     Controller = locomotive.Controller;
 
-var User  = require('../../../models/User'),
-    Group = require('../../../models/Group'),
-    Token = require('../../../models/Token');
+var User  = mongoose.model('User'),
+    Group = mongoose.model('Group'),
+    Token = mongoose.model('Token');
 
 var usersController = new Controller();
 usersController.before(['index', 'show', 'update', 'destroy'], helper.isAuthenticated);

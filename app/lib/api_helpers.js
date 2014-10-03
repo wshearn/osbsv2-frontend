@@ -22,10 +22,10 @@ function filterMongoose(object, filter) {
   }
 
   var filterOut = [];
-  if (typeof(filter.length) === "undefined") {
-    filterOut.push(filter);
-  } else {
+  if (filter instanceof Array) {
     filterOut = filter;
+  } else {
+    filterOut.push(filter);
   }
 
   if (object !== null) {

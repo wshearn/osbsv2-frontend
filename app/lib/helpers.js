@@ -1,3 +1,5 @@
+"use strict";
+
 function requireAuth(self, cb) {
   if (!self.req.isAuthenticated()) {
     return self.res.redirect(302, '/login');

@@ -1,3 +1,5 @@
+"use strict";
+
 var passport = require('passport');
 
 function generic(res, err, data) {

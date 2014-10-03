@@ -1,3 +1,5 @@
+"use strict";
+
 var Group = require('../../app/models/Group');
 
 function createAdminGroup(err, group) {

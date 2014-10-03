@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = function setupMongoose() {
   this.mongoose = require('mongoose');
   this.mongoose.connect(this.set('db-uri'));

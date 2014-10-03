@@ -1,3 +1,5 @@
+"use strict";
+
 var locomotive = require('locomotive'),
     bootable = require('bootable');
 

@@ -1,3 +1,5 @@
+"use strict";
+
 var locomotive = require('locomotive'),
     passport   = require('passport'),
     helpers    = require('../lib/helpers'),

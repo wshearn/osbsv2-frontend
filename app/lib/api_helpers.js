@@ -80,7 +80,7 @@ exports.createObject = createObject;
 exports.isAuthenticated = passport.authenticate(['requireuser', 'basic'], { session: false });
 
 function AuthOrToken(req, res, next) {
-  passport.authenticate(['requireuser', 'basic'], {session: false}, function(err, user, info){
+  passport.authenticate(['requireuser', 'basic'], {session: false}, function(err, user){
     if (err) {
       return next(err);
     }

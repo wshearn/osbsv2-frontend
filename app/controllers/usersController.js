@@ -46,9 +46,9 @@ function createNewUser(user, res) {
 
 userController.create = function create() {
   var self = this;
-  var token = self.param('token');
+  var usertoken = self.param('token') || self.body.token;
 
-  Token.findOne({token: token}, function findRegToken(err, token){
+  Token.findOne({token: usertoken}, function findRegToken(err, token){
     if (err || !token) {
       return self.res.redirect('/register', 401);
     }

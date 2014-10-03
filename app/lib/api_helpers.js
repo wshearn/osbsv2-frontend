@@ -67,7 +67,9 @@ exports.findAndDestroy = findAndDestroy;
 
 function createObject(res, Schema, item) {
   var object = new Schema(item);
-
+  if (item.password) {
+    object.password = item.password;
+  }
   object.save(function(err){
     return generic(res, err, object);
   });
@@ -75,4 +77,25 @@ function createObject(res, Schema, item) {
 }
 exports.createObject = createObject;
 
-exports.isAuthenticated = passport.authenticate(['requireuser', 'basic']);
+exports.isAuthenticated = passport.authenticate(['requireuser', 'basic'], { session: false });
+
+function AuthOrToken(req, res, next) {
+  passport.authenticate(['requireuser', 'basic'], {session: false}, function(err, user, info){
+    if (err) {
+      return next(err);
+    }
+    if (!user && !req.body.token) {
+      return res.send(401, 'Unauthorized');
+    }
+
+    if (user) {
+      req.logIn(user, function(err){
+        if (err) {
+          console.log(err);
+        }
+      });
+    }
+    return next(err);
+  })(req, res, next);
+}
+exports.AuthOrToken = AuthOrToken;

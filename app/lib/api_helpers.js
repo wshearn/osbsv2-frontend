@@ -52,8 +52,8 @@ function findAndReturnObject(res, Schema, id, filter) {
   }
   else {
     Schema.findOne({"_id": id}, function(err, object){
-      var retObject = filterMongoose(object, filter);
-      return generic(res, err, retObject);
+      var returnObj = filterMongoose(object, filter);
+      return generic(res, err, returnObj);
     });
   }
 }

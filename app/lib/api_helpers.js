@@ -4,7 +4,7 @@ var passport = require('passport');
 
 function generic(res, err, data) {
   if (err) {
-    error(res, err);
+    return error(res, err);
   }
 
   return res.status(200).json(data);
@@ -120,7 +120,7 @@ function AuthOrToken(req, res, next) {
     if (user) {
       req.logIn(user, function(err){
         if (err) {
-          console.log(err);
+          return next(err);
         }
       });
     }

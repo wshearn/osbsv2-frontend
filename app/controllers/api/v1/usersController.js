@@ -41,11 +41,11 @@ usersController.create = function create() {
   if (typeof (this.req.param('token')) !== "undefined") {
     var usertoken = this.param('token') || this.body.token;
     Token.findOne({token: usertoken}, function(err, token){
-      if (err || !token) {
-        return self.res.send(401, 'Unauthorized');
-      } else {
+      if (!err && token) {
         self.req.body.token = [token.id];
         return helper.createObject(self.res, User, self.req.body);
+      } else {
+        return self.res.send(401, 'Unauthorized');
       }
     });
   } else if (typeof (this.req.user) !== "undefined") {

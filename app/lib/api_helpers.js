@@ -138,8 +138,9 @@ exports.findAndDestroy = findAndDestroy;
 /**
  * Creates a new mongo record
  * @param {object} res - ExpressJS response object
- * @param {model} Schema - Mongoose model to search.
+ * @param {object} Schema - Mongoose model to search.
  * @param {object} item - KV pair of the item to create. Validated at the model level.
+ * @param {object} filter - Items to filter out of the result returned to the user.
  */
 function createObject(res, Schema, item, filter) {
   var object = new Schema(item);
@@ -156,15 +157,15 @@ exports.createObject = createObject;
 /**
  * Wrapper around createObject that checks to see if the user is in the admin
  * group
- * @param {object} res - ExpressJS response object
- * @param {object} user - ExpressJS user object
- * @param {model} Schema - Mongoose model to search.
- * @param {object} item - KV pair of the item to create. Validated at the model level.
+ * @param {object} req - ExpressJS request object.
+ * @param {object} res - ExpressJS response object.
+ * @param {object} Schema - Mongoose model to search.
+ * @param {object} filter - Items to filter out of the result returned to the user.
  */
-function adminCreateObject(res, user, Schema, item, filter) {
+function adminCreateObject(req, res, Schema, filter) {
   Group.findOne({group: "admin"}, function (err, group) {
-    if (group !== null || user._doc.groups.indexOf(group._doc._id) >= 0) {
-      return createObject(res, Schema, item, filter);
+    if (group !== null || req.user._doc.groups.indexOf(group._doc._id) >= 0) {
+      return createObject(res, Schema, req.body, filter);
     } else {
       return res.send(401, 'Unauthorized');
     }

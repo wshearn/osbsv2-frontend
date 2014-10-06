@@ -20,8 +20,31 @@ html
 
     script(src='/third_party/jquery/dist/jquery.min.js')
     script(src='/third_party/bootstrap/dist/js/bootstrap.min.js')
-    script(src='/js/signup.js')
     script(type='text/javascript').
+      function submitSignup() {
+        var data = {
+          token: document.getElementById('token').value,
+          fullname: document.getElementById('fullname').value,
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value
+        };
+        $.ajax({
+          url: '/api/v1/users',
+          type: "POST",
+          jsonp: 'callback',
+          dataType: 'jsonp',
+          data: data,
+          complete: function (response) {
+            if (response.status === 200) {
+              document.location = '/login';
+            } else {
+              document.getElementById('error').innerText = response.statusText;
+              return $("#alertBox").slideDown();
+            }
+          }
+        });
+      }
+
       $('#signup').submit(function(event){
         event.preventDefault();
         submitSignup();

@@ -23,7 +23,7 @@ servicesController.update = function update() {
 };
 
 servicesController.create = function create() {
-  return helper.adminCreateObject(this.res, this.req.user, Service, this.req.body);
+  return helper.adminCreateObject(this.req, this.res, Service, null);
 };
 
 servicesController.destroy = function destroy() {

@@ -23,7 +23,7 @@ appsController.update = function update() {
 };
 
 appsController.create = function create() {
-  return helper.adminCreateObject(this.res, this.req.user, Application, this.req.body);
+  return helper.adminCreateObject(this.req, this.res, Application, null);
 };
 
 appsController.destroy = function destroy() {

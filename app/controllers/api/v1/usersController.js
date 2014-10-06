@@ -49,7 +49,7 @@ usersController.create = function create() {
       }
     });
   } else if (typeof (this.req.user) !== "undefined") {
-    return helper.adminCreateObject(this.res, this.req.user, User, this.req.body, filter);
+    return helper.adminCreateObject(this.req, this.res, User, filter);
   } else {
     return this.res.send(401, 'Unauthorized');
   }

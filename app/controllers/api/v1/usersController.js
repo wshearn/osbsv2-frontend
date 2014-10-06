@@ -43,13 +43,13 @@ usersController.create = function create() {
     Token.findOne({token: usertoken}, function(err, token){
       if (!err && token) {
         self.req.body.token = [token.id];
-        return helper.createObject(self.res, User, self.req.body);
+        return helper.createObject(self.res, User, self.req.body, filter);
       } else {
         return self.res.send(401, 'Unauthorized');
       }
     });
   } else if (typeof (this.req.user) !== "undefined") {
-    return helper.adminCreateObject(this.res, this.req.user, User, this.req.body);
+    return helper.adminCreateObject(this.res, this.req.user, User, this.req.body, filter);
   } else {
     return this.res.send(401, 'Unauthorized');
   }

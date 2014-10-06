@@ -141,13 +141,13 @@ exports.findAndDestroy = findAndDestroy;
  * @param {model} Schema - Mongoose model to search.
  * @param {object} item - KV pair of the item to create. Validated at the model level.
  */
-function createObject(res, Schema, item) {
+function createObject(res, Schema, item, filter) {
   var object = new Schema(item);
   if (item.password) {
     object.password = item.password;
   }
   object.save(function(err){
-    return generic(res, err, object);
+    return generic(res, err, filterMongoose(object, filter));
   });
 
 }
@@ -161,10 +161,10 @@ exports.createObject = createObject;
  * @param {model} Schema - Mongoose model to search.
  * @param {object} item - KV pair of the item to create. Validated at the model level.
  */
-function adminCreateObject(res, user, Schema, item) {
+function adminCreateObject(res, user, Schema, item, filter) {
   Group.findOne({group: "admin"}, function (err, group) {
     if (group !== null || user._doc.groups.indexOf(group._doc._id) >= 0) {
-      return createObject(res, Schema, item);
+      return createObject(res, Schema, item, filter);
     } else {
       return res.send(401, 'Unauthorized');
     }

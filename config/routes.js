@@ -31,7 +31,7 @@ module.exports = function routes() {
   this.match('login', 'users#login', { via: 'post' });
   this.match('logout', 'users#logout');
 
-  this.resource('users');
+//  this.resource('users');
 
   this.namespace('api', function() {
     setupApiV1(this);

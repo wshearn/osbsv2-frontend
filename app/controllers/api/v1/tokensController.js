@@ -22,6 +22,7 @@ tokensController.update = function update() {
   return helper.findAndUpdateObject(this.res, Token, this.req.param('id'), this.req.body);
 };
 
+// TODO: Only allow if the user is an admin or group admin
 tokensController.create = function create() {
   return helper.createObject(this.res, Token, this.req.body);
 };

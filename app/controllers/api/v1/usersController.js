@@ -49,13 +49,7 @@ usersController.create = function create() {
       }
     });
   } else if (typeof (this.req.user) !== "undefined") {
-    Group.findOne({group: "admin"}, function (err, group) {
-      if (group === null || self.req.user._doc.groups.indexOf(group._doc._id) >= 0) {
-        return helper.createObject(self.res, User, self.req.body);
-      } else {
-        return self.res.send(401, 'Unauthorized');
-      }
-    });
+    return helper.adminCreateObject(this.res, this.req.user, User, this.req.body);
   } else {
     return this.res.send(401, 'Unauthorized');
   }

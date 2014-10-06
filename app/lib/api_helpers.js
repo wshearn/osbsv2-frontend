@@ -1,6 +1,9 @@
 "use strict";
 
-var passport = require('passport');
+var passport = require('passport'),
+    mongoose = require('mongoose');
+
+var Group = mongoose.model('Group');
 
 /**
  * Simple wrapper function to handle returning data to the client.
@@ -150,7 +153,24 @@ function createObject(res, Schema, item) {
 }
 exports.createObject = createObject;
 
-exports.isAuthenticated = passport.authenticate(['requireuser', 'basic'], { session: false });
+/**
+ * Wrapper around createObject that checks to see if the user is in the admin
+ * group
+ * @param {object} res - ExpressJS response object
+ * @param {object} user - ExpressJS user object
+ * @param {model} Schema - Mongoose model to search.
+ * @param {object} item - KV pair of the item to create. Validated at the model level.
+ */
+function adminCreateObject(res, user, Schema, item) {
+  Group.findOne({group: "admin"}, function (err, group) {
+    if (group !== null || user._doc.groups.indexOf(group._doc._id) >= 0) {
+      return createObject(res, Schema, item);
+    } else {
+      return res.send(401, 'Unauthorized');
+    }
+  });
+}
+exports.adminCreateObject = adminCreateObject;
 
 /**
  * Checks to see if a user is logged in OR if they have a token to allow them to continue. Token is validated at the
@@ -179,3 +199,5 @@ function AuthOrToken(req, res, next) {
   })(req, res, next);
 }
 exports.AuthOrToken = AuthOrToken;
+
+exports.isAuthenticated = passport.authenticate(['requireuser', 'basic'], { session: false });

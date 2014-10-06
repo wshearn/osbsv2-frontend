@@ -23,7 +23,7 @@ groupsController.update = function update() {
 };
 
 groupsController.create = function create() {
-  return helper.createObject(this.res, Group, this.req.body);
+  return helper.adminCreateObject(this.res, this.req.user, Group, this.req.body);
 };
 
 groupsController.destroy = function destroy() {

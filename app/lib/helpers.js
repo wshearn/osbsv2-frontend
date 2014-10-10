@@ -1,4 +1,7 @@
 "use strict";
+var mongoose   = require('mongoose');
+
+var Group = mongoose.model('Group');
 
 function requireAuth(self, cb) {
   if (!self.req.isAuthenticated()) {
@@ -18,9 +21,19 @@ function genericPageRender(self, title) {
 
   if (self.req.user) {
     self.user = self.req.user;
-  }
+    self.groups=[];
 
-  return self.render(null, null, null);
+    Group.find({}, function(err, groups){
+      groups.forEach(function(group){
+        if (self.user['groups'].indexOf(group['id']) > -1) {
+          self.user.groups[self.user['groups'].indexOf(group['id'])] = group['group'];
+        }
+      });
+      return self.render(null, null, null);
+    });
+  } else {
+    return self.render(null, null, null);
+  }
 }
 exports.genericPageRender = genericPageRender;
 

@@ -43,6 +43,7 @@ usersController.create = function create() {
     Token.findOne({token: usertoken}, function(err, token){
       if (!err && token) {
         self.req.body.token = [token.id];
+        self.req.body.groups = token.groups;
         return helper.createObject(self.res, User, self.req.body, filter);
       } else {
         return self.res.send(401, 'Unauthorized');

@@ -3,7 +3,7 @@ ul.nav.navbar-nav.navbar-left
     a(href="/") Home
 ul.nav.navbar-nav.navbar-right
   li.dropdown
-    a.dropdown-toggle(data-toggle="dropdown") #{user.name || user.username}
+    a.dropdown-toggle(data-toggle="dropdown") #{user.fullname || user.username}
       span.caret
     ul.dropdown-menu
       li

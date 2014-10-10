@@ -25,8 +25,9 @@ function genericPageRender(self, title) {
 
     Group.find({}, function(err, groups){
       groups.forEach(function(group){
-        if (self.user['groups'].indexOf(group['id']) > -1) {
-          self.user.groups[self.user['groups'].indexOf(group['id'])] = group['group'];
+        var index = self.user.groups.indexOf(group.id);
+        if (index > -1) {
+          self.user.groups[index] = group.group;
         }
       });
       return self.render(null, null, null);

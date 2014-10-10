@@ -15,6 +15,18 @@ usersController.before(['create'], helper.AuthOrToken);
 
 var filter = ['hash', 'salt', 'token'];
 
+function usersAdminFunction(self, cb) {
+  Group.findOne({group: "admin"}, function (err, group) {
+    if (group === null ||
+      self.req.user._doc.groups.indexOf(group._doc._id) >= 0 ||
+      self.req.user.id === self.req.params.id) {
+      return cb(self.res, User, self.req.param('id'), self.req.body);
+    } else {
+      return self.res.send(401, 'Unauthorized');
+    }
+  });
+}
+
 usersController.index = function index() {
   return helper.findAndReturnObject(this.res, User, null, filter);
 };
@@ -24,16 +36,7 @@ usersController.show = function show() {
 };
 
 usersController.update = function update() {
-  var self = this;
-  Group.findOne({group: "admin"}, function (err, group) {
-    if (group === null ||
-      self.req.user._doc.groups.indexOf(group._doc._id) >= 0 ||
-      self.req.user.id === self.req.params.id) {
-      return helper.findAndUpdateObject(this.res, User, this.req.param('id'), this.req.body);
-    } else {
-      return self.res.send(401, 'Unauthorized');
-    }
-  });
+  return usersAdminFunction(this, helper.findAndUpdateObject);
 };
 
 usersController.create = function create() {
@@ -60,16 +63,7 @@ usersController.create = function create() {
 };
 
 usersController.destroy = function destroy() {
-  var self = this;
-  Group.findOne({group: "admin"}, function (err, group) {
-    if (group === null ||
-        self.req.user._doc.groups.indexOf(group._doc._id) >= 0 ||
-        self.req.user.id === self.req.params.id) {
-      return helper.findAndDestroy(self.res, User, self.req.param('id'));
-    } else {
-      return self.res.send(401, 'Unauthorized');
-    }
-  });
+  return usersAdminFunction(this, helper.findAndDestroy);
 };
 
 module.exports = usersController;

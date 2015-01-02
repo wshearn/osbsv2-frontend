@@ -76,19 +76,13 @@ userController.login = function login() {
 };
 
 userController.register = function register() {
-  if (this.req.isAuthenticated()) {
-    return this.res.redirect(302, '/');
-  }
-
-  return helpers.genericPageRender(this, 'Register');
+  this.title = 'Register';
+  return helpers.forceNoAuth(this, helpers.genericPageRender);
 };
 
 userController.loginForm = function loginForm() {
-  if (this.req.isAuthenticated()) {
-    return this.res.redirect(302, '/');
-  }
-
-  return helpers.genericPageRender(this, 'Login');
+  this.title = 'Login';
+  return helpers.forceNoAuth(this, helpers.genericPageRender);
 };
 
 userController.logout = function logout() {

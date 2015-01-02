@@ -14,6 +14,17 @@ function requireAuth(self, cb) {
 }
 exports.requireAuth = requireAuth;
 
+function forceNoAuth(self, cb) {
+  if (self.req.isAuthenticated()) {
+    return self.res.redirect(302, '/');
+  }
+
+  if (cb) {
+    return cb(self);
+  }
+}
+exports.forceNoAuth = forceNoAuth;
+
 function genericPageRender(self, title) {
   if (title) {
     self.title = title;

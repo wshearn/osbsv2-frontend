@@ -24,14 +24,16 @@ function setupApiV1(parent) {
 }
 
 module.exports = function routes() {
+  // Pages Controller
   this.root('pages#main');
+  this.match('apidoc',      'pages#apidoc',    { via: 'get' });
+  this.match('changelog',   'pages#changelog', { via: 'get' });
 
-  this.match('register', 'users#register', { via: 'get' });
-  this.match('login', 'users#loginForm', { via: 'get' });
-  this.match('login', 'users#login', { via: 'post' });
-  this.match('logout', 'users#logout');
-
-//  this.resource('users');
+  // Users Controller
+  this.match('register', 'users#register',  { via: 'get' });
+  this.match('login',    'users#loginForm', { via: 'get' });
+  this.match('login',    'users#login',     { via: 'post' });
+  this.match('logout',   'users#logout');
 
   this.namespace('api', function() {
     setupApiV1(this);

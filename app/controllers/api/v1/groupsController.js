@@ -23,7 +23,40 @@ groupsController.update = function update() {
 };
 
 groupsController.create = function create() {
-  return helper.adminCreateObject(this.req, this.res, Group, null);
+  var self = this;
+
+  var newGroup = {
+    group: self.req.body.group,
+    admingroup: []
+  };
+
+  if (newGroup.group.split("_")[newGroup.group.split("_").length-1] === "admin") {
+    Group.findOne({ group: "admin" }, function(err, adminGroup){
+      if (err || !adminGroup) {
+        return self.send(503, 'Server Error');
+      } else {
+        newGroup.admingroup.push(adminGroup.id);
+        return helper.adminCreateObject(self.req, self.res, Group, null, newGroup);
+      }
+    });
+  } else {
+    Group.findOne({ group: self.req.body + "_admin" }, function(err, group){
+      if (err || !group) {
+        Group.findOne({ group: "admin" }, function(err, adminGroup){
+          var newAdminGroup = new Group({
+            group: self.req.body.group + "_admin";
+            admingroup: [adminGroup.id]
+          });
+          newAdminGroup.save();
+          newGroup.admingroup.push(newAdminGroup.id);
+          return helper.adminCreateObject(self.req, self.res, Group, null, newGroup);
+        });
+      } else {
+        newGroup.admingroup.push(group.id);
+        return helper.adminCreateObject(this.req, this.res, Group, null, newGroup);
+      }
+    });
+  }
 };
 
 groupsController.destroy = function destroy() {

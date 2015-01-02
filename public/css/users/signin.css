@@ -28,7 +28,12 @@
     border-bottom-left-radius: 0;
 }
 .form-signin input[type="password"] {
-    margin-bottom: 10px;
+    margin-bottom: -1px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+.form-signin input[type="password2"] {
+    margin-bottom: 15px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }

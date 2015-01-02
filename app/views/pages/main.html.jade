@@ -2,7 +2,24 @@ extends ../layout
 
 block content
   h1 #{title}
-  p
-    | Welcome aboard! Visit
-    a(href="http://locomotivejs.org/") locomotivejs.org
-    |  for details.
+  .container
+    .row
+      .col-lg-6
+        h2 Changes
+        ul
+          li Completly re-written
+          li Removed client cartridge
+          li User and groups
+          li Cross domain managment
+          li Full API for managing everything
+        p
+          a.btn.btn-default(href="/changelog") Learn More
+      .col-lg-6
+        h2 API Overview
+        ul
+          li Full CRUD api.(V2 of the api maybe REST-ful. Undecided right now)
+          li API end points are &lt;fqdn&gt;/api/v1
+          li All front end code uses API calls. (See source of OSBS for examples)
+          li ANYTHING the site can do you can do through the API
+        p
+          a.btn.btn-default(href="/apidoc") Learn More

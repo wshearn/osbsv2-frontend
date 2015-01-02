@@ -76,7 +76,11 @@ userController.login = function login() {
 };
 
 userController.register = function register() {
-  this.render(null, null, null);
+  if (this.req.isAuthenticated()) {
+    return this.res.redirect(302, '/');
+  }
+
+  return helpers.genericPageRender(this, 'Register');
 };
 
 userController.loginForm = function loginForm() {

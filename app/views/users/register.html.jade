@@ -10,37 +10,44 @@ html
         a.close(onclick="$('#alertBox').slideUp()") &times;
         div(id='error')
       form.form-signin(id='signup')
-        input.form-control(type='text', id='token', name='token', placeholder="Token", required)
-        input.form-control(type='text', id='fullname', name='fullname', placeholder="Name", autofocus)
-        input.form-control(type='text', id='username', name='username', placeholder="Username", required)
-        input.form-control(type='password', id='password', name='password', placeholder="Password", required)
+        h2.form-signin-heading Register
+        input.form-control(type='text' id='token' name='token' placeholder="Token" required autofocus)
+        input.form-control(type='text' id='fullname' name='fullname' placeholder="Name" required)
+        input.form-control(type='text' id='username' name='username' placeholder="Username" required)
+        input.form-control(type='password' id='password' name='password' placeholder="Password" required)
+        input.form-control(type='password' id='password2' name='password2' placeholder="Repeat Password" required)
         button.btn.btn-primary.btn-lg.btn-block(type='submit') Register
 
     script(src='/third_party/jquery/dist/jquery.min.js')
     script(src='/third_party/bootstrap/dist/js/bootstrap.min.js')
     script(type='text/javascript').
       function submitSignup() {
-        var data = {
-          token: document.getElementById('token').value,
-          fullname: document.getElementById('fullname').value,
-          username: document.getElementById('username').value,
-          password: document.getElementById('password').value
-        };
-        $.ajax({
-          url: '/api/v1/users',
-          type: "POST",
-          jsonp: 'callback',
-          dataType: 'jsonp',
-          data: data,
-          complete: function (response) {
-            if (response.status === 200) {
-              document.location = '/login';
-            } else {
-              document.getElementById('error').innerText = response.statusText;
-              return $("#alertBox").slideDown();
+        if (document.getElementById('password').value !== document.getElementById('password2').value) {
+          document.getElementById('error').innerText = "Passwords do not match";
+          return $("#alertBox").slideDown();
+        } else {
+          var data = {
+            token: document.getElementById('token').value,
+            fullname: document.getElementById('fullname').value,
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+          };
+          $.ajax({
+            url: '/api/v1/users',
+            type: "POST",
+            jsonp: 'callback',
+            dataType: 'jsonp',
+            data: data,
+            complete: function (response) {
+              if (response.status === 200) {
+                document.location = '/login';
+              } else {
+                document.getElementById('error').innerText = response.statusText;
+                return $("#alertBox").slideDown();
+              }
             }
-          }
-        });
+          });
+        }
       }
 
       $('#signup').submit(function(event){

@@ -169,7 +169,7 @@ function adminCreateObject(req, res, Schema, filter, item) {
 
   Group.findOne({group: "admin"}, function (err, group) {
     if (group !== null || req.user._doc.groups.indexOf(group._doc._id) >= 0) {
-      return createObject(res, Schema, req.body, filter);
+      return createObject(res, Schema, item, filter);
     } else {
       return res.send(401, 'Unauthorized');
     }

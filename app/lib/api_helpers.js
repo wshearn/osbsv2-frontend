@@ -163,13 +163,9 @@ exports.createObject = createObject;
  * @param {object} filter - Items to filter out of the result returned to the user.
  */
 function adminCreateObject(req, res, Schema, filter) {
-  if (typeof(item) === "undefined") {
-    item = req.body;
-  }
-
   Group.findOne({group: "admin"}, function (err, group) {
     if (group !== null || req.user._doc.groups.indexOf(group._doc._id) >= 0) {
-      return createObject(res, Schema, item, filter);
+      return createObject(res, Schema, req.body, filter);
     } else {
       return res.send(401, 'Unauthorized');
     }

@@ -1,5 +1,3 @@
-"use strict";
-
 var socketio         = require('socket.io'),
     express          = require('express'),
     cookieParser     = require('cookie-parser'),

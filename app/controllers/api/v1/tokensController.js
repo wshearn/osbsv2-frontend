@@ -1,5 +1,3 @@
-"use strict";
-
 var locomotive = require('locomotive'),
     mongoose   = require('mongoose'),
     helper     = require('../../../lib/api_helpers'),

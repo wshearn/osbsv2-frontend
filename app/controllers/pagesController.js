@@ -1,5 +1,3 @@
-"use strict";
-
 var locomotive = require('locomotive'),
     helpers    = require('../lib/helpers'),
     Controller = locomotive.Controller;

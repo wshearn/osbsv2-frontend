@@ -1,5 +1,3 @@
-"use strict";
-
 var passport            = require('passport'),
     LocalStrategy       = require('passport-local').Strategy,
     BasicStrategy       = require('passport-http').BasicStrategy,

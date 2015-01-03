@@ -1,5 +1,3 @@
-"use strict";
-
 module.exports = function() {
   // Configure view-related settings.  Consult the Express API Reference for a
   // list of the available [settings](http://expressjs.com/api.html#app-settings).

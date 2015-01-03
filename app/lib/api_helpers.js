@@ -1,5 +1,3 @@
-"use strict";
-
 var passport = require('passport'),
     mongoose = require('mongoose');
 
@@ -14,9 +12,9 @@ var Group = mongoose.model('Group');
 function generic(res, err, data) {
   if (err) {
     return error(res, err);
+  } else {
+    return res.status(200).json(data);
   }
-
-  return res.status(200).json(data);
 }
 exports.generic = generic;
 
@@ -195,8 +193,9 @@ function AuthOrToken(req, res, next) {
           return next(err);
         }
       });
+    } else {
+      return next();
     }
-    return next(err);
   })(req, res, next);
 }
 exports.AuthOrToken = AuthOrToken;

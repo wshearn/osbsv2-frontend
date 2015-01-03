@@ -33,7 +33,7 @@ groupsController.create = function create() {
   if (newGroup.group.split("_")[newGroup.group.split("_").length-1] === "admin") {
     Group.findOne({ group: "admin" }, function(err, adminGroup){
       if (!err && adminGroup) {
-        if (self.req._doc.groups.indexOf(adminGroup.id) > -1) {
+        if (self.req.user._doc.groups.indexOf(adminGroup.id) > -1) {
           newGroup.admingroup.push(adminGroup.id);
           return helper.createObject(self.res, Group, newGroup, null);
         } else {
@@ -46,16 +46,22 @@ groupsController.create = function create() {
   } else {
     Group.findOne({ group: self.req.body + "_admin" }, function(err, group){
       if (!err && group) {
-        if (self.req._doc.groups.indexOf(group.id) > -1 ||) {
+        if (self.req.user._doc.groups.indexOf(group.id) > -1 ||) {
           newGroup.admingroup.push(group.id);
           return helper.createObject(self.res, Group, newGroup, null);
         } else {
-          return helper.adminCreateObject(self.req, self.res, Group, null, newGroup);
+          Group.findOne({ group: "admin" }, function(err, adminGroup){
+            if (!err && adminGroup && self.req.user._doc.groups.indexOf(adminGroup.id) > -1) {
+                return helper.createObject(self.res, Group, newGroup, null);
+            } else {
+              return res.send(401, 'Unauthorized');
+            }
+          })
         }
       } else {
         Group.findOne({ group: "admin" }, function(err, adminGroup){
           if (!err && adminGroup) {
-            if (self.req._doc.groups.indexOf(adminGroup.id) > -1) {
+            if (self.req.user._doc.groups.indexOf(adminGroup.id) > -1) {
               var newAdminGroup = new Group({
                 group: self.req.body.group + "_admin";
                 admingroup: [adminGroup.id]

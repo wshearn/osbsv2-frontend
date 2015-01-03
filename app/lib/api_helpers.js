@@ -162,7 +162,7 @@ exports.createObject = createObject;
  * @param {object} Schema - Mongoose model to search.
  * @param {object} filter - Items to filter out of the result returned to the user.
  */
-function adminCreateObject(req, res, Schema, filter, item) {
+function adminCreateObject(req, res, Schema, filter) {
   if (typeof(item) === "undefined") {
     item = req.body;
   }

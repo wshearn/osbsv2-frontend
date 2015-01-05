@@ -25,6 +25,7 @@ function forceNoAuth(self, cb) {
 exports.forceNoAuth = forceNoAuth;
 
 function genericPageRender(self, title) {
+  self.menu = self.app.menu;
   if (title) {
     self.title = title;
   }
@@ -50,7 +51,6 @@ exports.genericPageRender = genericPageRender;
 
 function genericPageRenderWithAuth(title, self) {
   self.title = title;
-  self.menu = self.app.menu;
   return requireAuth(self, genericPageRender);
 }
 exports.genericPageRenderWithAuth = genericPageRenderWithAuth;

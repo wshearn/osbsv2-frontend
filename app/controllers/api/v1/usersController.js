@@ -17,8 +17,8 @@ var filter = ['hash', 'salt', 'token'];
 
 function usersAdminFunction(self, cb) {
   Group.findOne({group: "admin"}, function (err, group) {
-    if (group === null ||
-      self.req.user._doc.groups.indexOf(group._doc._id) >= 0 ||
+    if (group === null || // If no admin group found, everyone is an admin
+      self.req.user._doc.groups.indexOf(group.id) > -1 ||
       self.req.user.id === self.req.params.id) {
       return cb(self.res, User, self.req.param('id'), self.req.body);
     } else {
@@ -52,13 +52,13 @@ usersController.create = function create() {
         self.req.body.groups = token.groups;
         return helper.createObject(self.res, User, self.req.body, filter);
       } else {
-        return self.res.send(401, 'Unauthorized');
+        return self.res.send(401, 'Invalid token.');
       }
     });
   } else if (typeof (this.req.user) !== "undefined") {
     return helper.adminCreateObject(this.req, this.res, User, filter);
   } else {
-    return this.res.send(401, 'Unauthorized');
+    return this.res.send(401, 'No token specified.');
   }
 };
 

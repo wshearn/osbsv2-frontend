@@ -4,7 +4,8 @@ var express        = require('express'),
     cookieParser   = require('cookie-parser'),
     poweredBy      = require('connect-powered-by'),
     methodOverride = require('method-override'),
-    SessionStore   = require('session-mongoose')(express);
+    SessionStore   = require('session-mongoose')(express),
+    menu           = require('../menu');
 
 function setupParsers(self) {
   self.use(cookieParser());
@@ -34,6 +35,10 @@ function setupPassport(self) {
   self.use(passport.session());
 }
 
+function setupMenu(self) {
+  self.menu = menu;
+}
+
 module.exports = function() {
   // Use middleware.  Standard [Connect](http://www.senchalabs.org/connect/)
   // middleware is built-in, with additional [third-party](https://github.com/senchalabs/connect/wiki)
@@ -49,6 +54,7 @@ module.exports = function() {
   setupSession(this);
   setupMethodOverride(this);
   setupPassport(this);
+  setupMenu(this);
 
   this.use(this.router);
 };

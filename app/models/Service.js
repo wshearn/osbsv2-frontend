@@ -17,6 +17,14 @@ var ServiceSchema = new Schema({
 
   domainName: {
     type: String
+  },
+
+  sshPrivKey: {
+    type: String
+  },
+
+  sshPubKey: {
+    type: String
   }
 });
 

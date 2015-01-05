@@ -5,15 +5,17 @@ var locomotive = require('locomotive'),
 
 var Service = mongoose.model('Service');
 
+var filter = ['sshPrivKey'];
+
 var servicesController = new Controller();
 servicesController.before('*', helper.isAuthenticated);
 
 servicesController.index = function index() {
-  return helper.findAndReturnObject(this.res, Service, null);
+  return helper.findAndReturnObject(this.res, Service, null, filter);
 };
 
 servicesController.show = function show() {
-  return helper.findAndReturnObject(this.res, Service, this.req.param('id'));
+  return helper.findAndReturnObject(this.res, Service, this.req.param('id'), filter);
 };
 
 servicesController.update = function update() {

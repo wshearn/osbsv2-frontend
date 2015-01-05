@@ -1,6 +1,8 @@
 ul.nav.navbar-nav.navbar-left
-  //- li
-    a(href="/") Home
+  each item in menu
+    - var isActive = ((typeof(activepageid) !== "undefined" && item.menuid === activepageid) ? 'active' : '')
+    li(class=isActive)
+      a(href="#{item.url}") #{item.name}
 ul.nav.navbar-nav.navbar-right
   li.dropdown
     a.dropdown-toggle(data-toggle="dropdown") #{user.fullname || user.username}

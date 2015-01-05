@@ -33,6 +33,10 @@ module.exports = function routes() {
   this.match('login',    'users#login',     { via: 'post' });
   this.match('logout',   'users#logout');
 
+  // Manage Controller
+  this.match('services',     'manage#services',   { via: 'get'} );
+  this.match('services/add', 'manage#addservice', { via: 'get'} );
+
   this.namespace('api', function() {
     setupApiV1(this);
   });

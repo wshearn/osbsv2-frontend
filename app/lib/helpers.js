@@ -50,6 +50,7 @@ exports.genericPageRender = genericPageRender;
 
 function genericPageRenderWithAuth(title, self) {
   self.title = title;
+  self.menu = self.app.menu;
   return requireAuth(self, genericPageRender);
 }
 exports.genericPageRenderWithAuth = genericPageRenderWithAuth;

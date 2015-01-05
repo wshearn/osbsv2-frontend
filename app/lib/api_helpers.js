@@ -162,7 +162,8 @@ exports.createObject = createObject;
  */
 function adminCreateObject(req, res, Schema, filter) {
   Group.findOne({group: "admin"}, function (err, group) {
-    if (group !== null || req.user._doc.groups.indexOf(group._doc._id) >= 0) {
+    if (group === null || // If no admin group found, everyone is an admin
+      req.user._doc.groups.indexOf(group._doc._id) >= 0) {
       return createObject(res, Schema, req.body, filter);
     } else {
       return res.send(401, 'Unauthorized');

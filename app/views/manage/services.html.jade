@@ -1,0 +1,38 @@
+extends ../layout
+
+block content
+  h1 #{title}
+  .container
+      if (typeof(services) === "undefined" || services.length === 0)
+        h1 No Services
+        a(href="/services/add") Add one.
+      else
+        each service in services
+          .row
+            .col-lg-12
+              - var sshKey = "";
+              - if (service.sshPubKey.split(' ').length >= 2) {
+              -   sshKey = service.sshPubKey.split(' ')[1];
+              - } else {
+              -   sshKey = service.sshPubKey;
+              - }
+              .row
+                .col-lg-6
+                  h1 #{service.service}
+                .col-lg-6
+                  a.btn.btn-primary.btn-lg.pull-right(href="/services/edit/#{service._id}") Edit
+              .well
+                .row
+                  .col-lg-6
+                    p Username: #{service.username}
+                  .col-lg-6
+                    p API: #{service.apiEndpoint}
+                .row
+                  .col-lg-6
+                    p Domain Name: #{service.domainName}
+                  .col-lg-6
+                    p SSH Public Key: #{sshKey.substring(0,9)}...#{sshKey.substring(sshKey.length-9)}
+        .row
+          a.btn.btn-primary.btn-lg(href="/services/add") Add New Service
+
+
